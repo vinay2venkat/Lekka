@@ -1,13 +1,13 @@
 # 08 – Progress (live)
 
-Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
+Last updated: 2026-11-12 · Updated by: Claude (slice 0.4 session)
 
 ## Current status
 
 - **Phase:** 0 – Foundations
-- **Next slice:** 0.4 domain/money and domain/periods
+- **Next slice:** 0.5 Dexie schema v1, repositories, codec
 - **In progress:** none
-- **Blockers:** none. Slice 0.3 is in PR #6, awaiting review and merge.
+- **Blockers:** none. Slice 0.4 is in a PR awaiting review and merge.
 
 ## Rules for maintaining this file
 
@@ -23,7 +23,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 | 0.1 | Specification review | Done | n/a (no code) | All 15 defaults accepted (ADR-021 to 035). Spec edits applied to 01–05. Pinned package list in the review doc "Lekka – Specification review (slice 0.1)". |
 | 0.2 | Repo scaffold, lint, CI | Done | Local and GitHub Actions: lint, typecheck, Vitest 5/5, build, Playwright 4/4 pass | PR #1, CI green on first run. |
 | 0.3 | Design tokens, theme, shell, logo | Done | Local: lint, typecheck, Vitest 63/63, build, Playwright 21/21 (1 desktop-only skip on phone) | Tokens with contrast tests, light/dark/system theme, single-nav shell (bottom bar / sidebar), Home + Settings, logo + PWA icons, minimal i18next. PR #6. |
-| 0.4 | domain/money and domain/periods | Not started | – | – |
+| 0.4 | domain/money and domain/periods | Done | Local: Vitest 181/181 (118 domain incl. fast-check property tests), lint, typecheck, build | Paise validation and safe sums, parseAmount (k/lakh/crore, sums, reason codes), en-IN formatPaise, largest remainder, LocalDate, budget periods by start day, FY, todayIn. Domain coverage ≈ 97% lines. |
 | 0.5 | Dexie schema v1, repositories, codec | Not started | – | – |
 | 0.6 | i18n, PWA shell, CSP | Not started | – | – |
 | 1.1 | Onboarding, household, members, solo mode, shared-device mode | Not started | – | – |
@@ -79,7 +79,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 
 | Suite | Last run | Result |
 | --- | --- | --- |
-| Domain unit + property (Vitest) | – | – |
+| Domain unit + property (Vitest) | 2026-11-12 (local, slice 0.4) | Pass: 118 domain tests incl. fast-check properties |
 | Storage (Vitest + fake-indexeddb) | – | – |
 | Components (RTL + axe) | 2026-11-12 (CI, PR #1) | Pass: 5/5 (scaffold smoke, harness, cn) |
 | End-to-end (Playwright) | 2026-11-12 (CI, PR #1) | Pass: 4/4 (smoke + axe, desktop and Pixel 7) |
@@ -89,7 +89,8 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 
 | Date | Slice | Summary |
 | --- | --- | --- |
-| 2026-11-12 | 0.3 | Design tokens (teal/marigold, status colours reserved) with automated WCAG contrast tests; theme System/Light/Dark; app shell with one nav landmark (bottom bar on phone, sidebar ≥ 768 px); Home and Settings routes; logo SVG and PWA icons via @vite-pwa/assets-generator; Noto Sans self-hosted; minimal i18next. ADR-038 to 041. JS 109.6 KB gz. |
+| 2026-11-12 | 0.4 | domain/money and domain/periods with unit and property tests (sum safety at 20,000 × ₹10 crore, format↔parse round trip, exact largest-remainder, period partition with no gaps, FY partition). No UI change. ADR-042 to 045. |
+| 2026-11-12 | 0.3 | PR #6 merged. Design tokens (teal/marigold, status colours reserved) with automated WCAG contrast tests; theme System/Light/Dark; app shell with one nav landmark (bottom bar on phone, sidebar ≥ 768 px); Home and Settings routes; logo SVG and PWA icons via @vite-pwa/assets-generator; Noto Sans self-hosted; minimal i18next. ADR-038 to 041. JS 109.6 KB gz. |
 | 2026-11-12 | 0.2 | PR #1 merged. |
 | 2026-11-12 | 0.2 | Scaffold in `frontend/`: Vite 8 + React 19 + TS 6 strict, Tailwind 4, shadcn/ui config + `cn`, ESLint 10 (strict type-checked, jsx-a11y, react-hooks, domain/data boundary rules, no dangerouslySetInnerHTML), Prettier, Vitest + fake-indexeddb + RTL + axe, Playwright (desktop + Pixel 7) with axe, GitHub Actions CI, Dependabot. All checks pass locally. ADR-036, 037. |
 | 2026-11-12 | 0.1 | Vinay accepted all defaults. ADR-021 to 035 recorded; replacement text applied directly to 01, 02, 03, 04, 05 in project files (gap and edge-case defaults included). 0.1 Done. |
@@ -131,6 +132,10 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 | 039 | 2026-11-12 | Routing with react-router 7.18.5 in declarative mode (v8 exists; 7 is still patched and well known) |
 | 040 | 2026-11-12 | Navigation lists only screens that exist; Activity, Add, Plan, More are added by their slices. One `<nav>` landmark restyled between bottom bar and sidebar |
 | 041 | 2026-11-12 | Theme: CSS follows prefers-color-scheme; an explicit Light/Dark choice sets `<html data-theme>` and is stored in localStorage (UI preference only) |
+| 042 | 2026-11-12 | Amount display: whole rupees without decimals (₹1,50,000); any paise shows two decimals (₹60.50). Intl receives an exact decimal string, never a float |
+| 043 | 2026-11-12 | Amount entry supports "+" sums only (no minus or multiply) so a stray "-" can never make a negative |
+| 044 | 2026-11-12 | `parseAmount` returns `{ ok, paise }` or `{ ok: false, reason }` with reason codes (empty, invalid, negative, zero, too_many_decimals, out_of_range, unsupported_digits) that become i18n keys in 1.3 |
+| 045 | 2026-11-12 | No date library in 0.4: LocalDate maths via Date.UTC integer days, today via Intl in the household timezone; date-fns + @date-fns/tz deferred to 4.6 (recurring). 02 Stack "Dates" row updated |
 
 ## Open issues
 
