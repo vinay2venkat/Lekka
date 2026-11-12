@@ -1,13 +1,13 @@
 # 08 – Progress (live)
 
-Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
+Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 
 ## Current status
 
 - **Phase:** 0 – Foundations
-- **Next slice:** 0.3 Design tokens, theme, shell, logo
+- **Next slice:** 0.4 domain/money and domain/periods
 - **In progress:** none
-- **Blockers:** none. Slice 0.2 is in PR #1 (https://github.com/vinay2venkat/Lekka/pull/1), CI green, awaiting merge.
+- **Blockers:** none. Slice 0.3 is in PR #2, awaiting review and merge.
 
 ## Rules for maintaining this file
 
@@ -22,7 +22,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 | --- | --- | --- | --- | --- |
 | 0.1 | Specification review | Done | n/a (no code) | All 15 defaults accepted (ADR-021 to 035). Spec edits applied to 01–05. Pinned package list in the review doc "Lekka – Specification review (slice 0.1)". |
 | 0.2 | Repo scaffold, lint, CI | Done | Local and GitHub Actions: lint, typecheck, Vitest 5/5, build, Playwright 4/4 pass | PR #1, CI green on first run. |
-| 0.3 | Design tokens, theme, shell, logo | Not started | – | – |
+| 0.3 | Design tokens, theme, shell, logo | Done | Local: lint, typecheck, Vitest 63/63, build, Playwright 21/21 (1 desktop-only skip on phone) | Tokens with contrast tests, light/dark/system theme, single-nav shell (bottom bar / sidebar), Home + Settings, logo + PWA icons, minimal i18next. PR #2. |
 | 0.4 | domain/money and domain/periods | Not started | – | – |
 | 0.5 | Dexie schema v1, repositories, codec | Not started | – | – |
 | 0.6 | i18n, PWA shell, CSP | Not started | – | – |
@@ -89,6 +89,8 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 
 | Date | Slice | Summary |
 | --- | --- | --- |
+| 2026-11-12 | 0.3 | Design tokens (teal/marigold, status colours reserved) with automated WCAG contrast tests; theme System/Light/Dark; app shell with one nav landmark (bottom bar on phone, sidebar ≥ 768 px); Home and Settings routes; logo SVG and PWA icons via @vite-pwa/assets-generator; Noto Sans self-hosted; minimal i18next. ADR-038 to 041. JS 109.6 KB gz. |
+| 2026-11-12 | 0.2 | PR #1 merged. |
 | 2026-11-12 | 0.2 | Scaffold in `frontend/`: Vite 8 + React 19 + TS 6 strict, Tailwind 4, shadcn/ui config + `cn`, ESLint 10 (strict type-checked, jsx-a11y, react-hooks, domain/data boundary rules, no dangerouslySetInnerHTML), Prettier, Vitest + fake-indexeddb + RTL + axe, Playwright (desktop + Pixel 7) with axe, GitHub Actions CI, Dependabot. All checks pass locally. ADR-036, 037. |
 | 2026-11-12 | 0.1 | Vinay accepted all defaults. ADR-021 to 035 recorded; replacement text applied directly to 01, 02, 03, 04, 05 in project files (gap and edge-case defaults included). 0.1 Done. |
 | 2026-11-12 | 0.1 | Spec review delivered. Key findings: 04 CSP would block Radix scroll-lock styles and libsodium WASM; header `period` clashes with budget-period naming; shared-device mode needs App Lock that ships in Phase 2. Packages pinned against live npm (TS 6.0.3 and ESLint 9 for plugin compatibility). |
@@ -125,12 +127,18 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 | 035 | 2026-11-12 | TypeScript 6.0 until typescript-eslint supports TS 7 (ESLint part amended by ADR-036) |
 | 036 | 2026-11-12 | ESLint 10.13 instead of 9: ESLint 9 is end-of-life. eslint-plugin-jsx-a11y (last release Oct 2024) is allowed with ESLint 10 through a pnpm peer override, verified to fire rules; replace it if it breaks |
 | 037 | 2026-11-12 | Frontend lives in `frontend/` (pnpm, exact pins, `.npmrc` save-exact). Dependabot (not Renovate) with a 14-day cooldown for npm and monthly GitHub Actions updates; CI runs format, lint, typecheck, coverage, build, `pnpm audit --prod`, Playwright |
+| 038 | 2026-11-12 | Minimal i18next (English resources, typed keys) pulled forward from 0.6 into 0.3 so shell strings go through i18n; 0.6 still adds plurals, Intl helpers and conventions |
+| 039 | 2026-11-12 | Routing with react-router 7.18.5 in declarative mode (v8 exists; 7 is still patched and well known) |
+| 040 | 2026-11-12 | Navigation lists only screens that exist; Activity, Add, Plan, More are added by their slices. One `<nav>` landmark restyled between bottom bar and sidebar |
+| 041 | 2026-11-12 | Theme: CSS follows prefers-color-scheme; an explicit Light/Dark choice sets `<html data-theme>` and is stored in localStorage (UI preference only) |
 
 ## Open issues
 
 - 06-ai-purchase-advisor.md is missing from project knowledge (listed in 00, referenced by instructions and `AdvisorVerdict` in 03). Needed before Phase 5.
-- `index.html` uses an empty `data:` favicon until the logo lands in 0.3; replace it there (and keep CSP `img-src` in mind in 0.6).
-- Initial JS is 68.7 KB gzipped with React alone; budget is 200 KB for shell + Quick Add (05).
+- Initial JS is 109.6 KB gzipped (React, react-router, i18next, lucide); budget is 200 KB for shell + Quick Add (05). Watch it in 1.3.
+- Member colour palette (10 hues, colour-blind tested, 05) is not in the tokens yet; do it in 1.1 with members.
+- The theme override can flash the system theme for a moment on first paint because no inline script is allowed (CSP); acceptable, revisit if noticeable.
+- Home is only a heading until 1.6.
 
 ## Knowledge file changes pending
 

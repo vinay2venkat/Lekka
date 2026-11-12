@@ -1,1 +1,121 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/noto-sans';
+
+/*
+ * Design tokens (05 Visual identity). Colours are CSS variables so light/dark switch without
+ * re-rendering. Rules:
+ * - primary = deep teal, accent = marigold (sparingly, never as text on light backgrounds).
+ * - success / warning / danger are reserved for budget status. Red only for over budget.
+ * - Text pairs meet 4.5:1, focus ring and input borders meet 3:1 (checked in tokens.test.ts).
+ */
+@theme {
+  --font-sans: 'Noto Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--lk-bg);
+  --color-surface: var(--lk-surface);
+  --color-fg: var(--lk-fg);
+  --color-muted-fg: var(--lk-muted-fg);
+  --color-border: var(--lk-border);
+  --color-input-border: var(--lk-input-border);
+  --color-primary: var(--lk-primary);
+  --color-primary-fg: var(--lk-primary-fg);
+  --color-primary-soft: var(--lk-primary-soft);
+  --color-accent: var(--lk-accent);
+  --color-accent-fg: var(--lk-accent-fg);
+  --color-focus: var(--lk-focus);
+  --color-success: var(--lk-success);
+  --color-warning: var(--lk-warning);
+  --color-danger: var(--lk-danger);
+
+  --radius-card: 1rem;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root {
+  color-scheme: light;
+  --lk-bg: #f6f8f7;
+  --lk-surface: #ffffff;
+  --lk-fg: #14211f;
+  --lk-muted-fg: #4a5a57;
+  --lk-border: #dde3e1;
+  --lk-input-border: #7a8a87;
+  --lk-primary: #0f5c57;
+  --lk-primary-fg: #ffffff;
+  --lk-primary-soft: #dcefec;
+  --lk-accent: #f2b544;
+  --lk-accent-fg: #1f1600;
+  --lk-focus: #0f5c57;
+  --lk-success: #1d6b36;
+  --lk-warning: #8a4b00;
+  --lk-danger: #b3261e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --lk-bg: #0e1514;
+    --lk-surface: #17211f;
+    --lk-fg: #e7eeec;
+    --lk-muted-fg: #a7b5b2;
+    --lk-border: #2c3a37;
+    --lk-input-border: #7f908c;
+    --lk-primary: #5ec4b8;
+    --lk-primary-fg: #04201d;
+    --lk-primary-soft: #183a36;
+    --lk-accent: #f2b544;
+    --lk-accent-fg: #1f1600;
+    --lk-focus: #8fded4;
+    --lk-success: #6fd08c;
+    --lk-warning: #f5b26b;
+    --lk-danger: #ff8a80;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --lk-bg: #0e1514;
+  --lk-surface: #17211f;
+  --lk-fg: #e7eeec;
+  --lk-muted-fg: #a7b5b2;
+  --lk-border: #2c3a37;
+  --lk-input-border: #7f908c;
+  --lk-primary: #5ec4b8;
+  --lk-primary-fg: #04201d;
+  --lk-primary-soft: #183a36;
+  --lk-accent: #f2b544;
+  --lk-accent-fg: #1f1600;
+  --lk-focus: #8fded4;
+  --lk-success: #6fd08c;
+  --lk-warning: #f5b26b;
+  --lk-danger: #ff8a80;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    /* 05: tabular figures for all amounts. */
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
