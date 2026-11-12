@@ -31,6 +31,8 @@ flowchart LR
 | Dates | date-fns v4 + `@date-fns/tz` | All period boundaries computed in the household timezone. |
 | i18n | i18next + react-i18next | English only in v1; all strings externalised from day one. |
 | Lists | TanStack Virtual | Virtualise long transaction lists. |
+| Routing | react-router 7, declarative mode | `BrowserRouter` + `Routes`; nav lists only screens that exist (ADR-039, ADR-040). |
+| Theme | CSS variables in Tailwind `@theme`; `prefers-color-scheme` by default, `<html data-theme>` for an explicit choice | Preference kept in localStorage (UI preference, not financial data; ADR-041). |
 | Local encryption | Web Crypto AES-256-GCM | Argon2id via libsodium `crypto_pwhash` (same library as sync, ADR-034). |
 | Sync crypto | libsodium (`libsodium-wrappers-sumo`) | X25519 sealed boxes for key envelopes, Ed25519 device signatures. |
 | Spreadsheets | SheetJS from its official distribution, lazy-loaded | The npm-registry package is outdated; install per SheetJS docs. |

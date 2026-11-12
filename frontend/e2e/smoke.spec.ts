@@ -12,14 +12,22 @@ test('production build loads with no console errors', async ({ page }) => {
 
   await page.goto('/');
   await expect(page).toHaveTitle('Lekka');
-  await expect(page.getByRole('heading', { level: 1, name: 'Lekka' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Home' })).toBeVisible();
+  await page.goto('/settings');
+  await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test('home page has no axe violations', async ({ page }) => {
-  await page.goto('/');
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
-    .analyze();
-  expect(results.violations).toEqual([]);
-});
+for (const colorScheme of ['light', 'dark'] as const) {
+  for (const path of ['/', '/settings']) {
+    test(`${path} has no axe violations in ${colorScheme} mode`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme });
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+  }
+}

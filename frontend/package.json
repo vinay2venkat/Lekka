@@ -19,12 +19,18 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "e2e": "playwright test",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "icons": "pwa-assets-generator"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans": "5.3.0",
     "clsx": "2.1.1",
+    "i18next": "26.5.11",
+    "lucide-react": "1.63.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "react-i18next": "17.1.9",
+    "react-router": "7.18.5",
     "tailwind-merge": "3.7.0"
   },
   "devDependencies": {
@@ -38,6 +44,7 @@
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@vite-pwa/assets-generator": "2.0.0",
     "@vitejs/plugin-react": "6.1.2",
     "@vitest/coverage-v8": "5.0.5",
     "axe-core": "4.14.0",
