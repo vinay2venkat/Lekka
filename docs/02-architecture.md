@@ -28,7 +28,7 @@ flowchart LR
 | Forms and validation | React Hook Form + Zod | Zod schemas shared by forms, import, restore and AI output parsing. |
 | UI kit | Tailwind CSS + shadcn/ui + Lucide | |
 | Charts | Recharts, lazy-loaded | Keep the Quick Add path free of chart code. |
-| Dates | date-fns v4 + `@date-fns/tz` | All period boundaries computed in the household timezone. |
+| Dates | `LocalDate` strings with integer calendar maths (`domain/periods`); "today" via `Intl.DateTimeFormat` in the household timezone | date-fns v4 + `@date-fns/tz` to be added when recurring rules need them (4.6), not before (ADR-045). |
 | i18n | i18next + react-i18next | English only in v1; all strings externalised from day one. |
 | Lists | TanStack Virtual | Virtualise long transaction lists. |
 | Routing | react-router 7, declarative mode | `BrowserRouter` + `Routes`; nav lists only screens that exist (ADR-039, ADR-040). |
