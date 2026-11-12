@@ -7,7 +7,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 - **Phase:** 0 – Foundations
 - **Next slice:** 0.4 domain/money and domain/periods
 - **In progress:** none
-- **Blockers:** none. Slice 0.3 is in PR #2, awaiting review and merge.
+- **Blockers:** none. Slice 0.3 is in PR #6, awaiting review and merge.
 
 ## Rules for maintaining this file
 
@@ -22,7 +22,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.3 session)
 | --- | --- | --- | --- | --- |
 | 0.1 | Specification review | Done | n/a (no code) | All 15 defaults accepted (ADR-021 to 035). Spec edits applied to 01–05. Pinned package list in the review doc "Lekka – Specification review (slice 0.1)". |
 | 0.2 | Repo scaffold, lint, CI | Done | Local and GitHub Actions: lint, typecheck, Vitest 5/5, build, Playwright 4/4 pass | PR #1, CI green on first run. |
-| 0.3 | Design tokens, theme, shell, logo | Done | Local: lint, typecheck, Vitest 63/63, build, Playwright 21/21 (1 desktop-only skip on phone) | Tokens with contrast tests, light/dark/system theme, single-nav shell (bottom bar / sidebar), Home + Settings, logo + PWA icons, minimal i18next. PR #2. |
+| 0.3 | Design tokens, theme, shell, logo | Done | Local: lint, typecheck, Vitest 63/63, build, Playwright 21/21 (1 desktop-only skip on phone) | Tokens with contrast tests, light/dark/system theme, single-nav shell (bottom bar / sidebar), Home + Settings, logo + PWA icons, minimal i18next. PR #6. |
 | 0.4 | domain/money and domain/periods | Not started | – | – |
 | 0.5 | Dexie schema v1, repositories, codec | Not started | – | – |
 | 0.6 | i18n, PWA shell, CSP | Not started | – | – |
