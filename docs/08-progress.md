@@ -7,7 +7,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 - **Phase:** 0 – Foundations
 - **Next slice:** 0.3 Design tokens, theme, shell, logo
 - **In progress:** none
-- **Blockers:** pushing to github.com/vinay2venkat/Lekka is refused until the Claude GitHub App is installed on the repo. Slice 0.2 is committed locally and waits for that to open its PR and get a first CI run.
+- **Blockers:** none. Slice 0.2 is in PR #1 (https://github.com/vinay2venkat/Lekka/pull/1), CI green, awaiting merge.
 
 ## Rules for maintaining this file
 
@@ -21,7 +21,7 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 | Slice | Name | Status | Tests | Notes |
 | --- | --- | --- | --- | --- |
 | 0.1 | Specification review | Done | n/a (no code) | All 15 defaults accepted (ADR-021 to 035). Spec edits applied to 01–05. Pinned package list in the review doc "Lekka – Specification review (slice 0.1)". |
-| 0.2 | Repo scaffold, lint, CI | Needs test run | Local: lint, typecheck, Vitest 5/5, build, Playwright 4/4 pass | Only the GitHub Actions run is outstanding (first push blocked on GitHub App access). |
+| 0.2 | Repo scaffold, lint, CI | Done | Local and GitHub Actions: lint, typecheck, Vitest 5/5, build, Playwright 4/4 pass | PR #1, CI green on first run. |
 | 0.3 | Design tokens, theme, shell, logo | Not started | – | – |
 | 0.4 | domain/money and domain/periods | Not started | – | – |
 | 0.5 | Dexie schema v1, repositories, codec | Not started | – | – |
@@ -81,8 +81,8 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 | --- | --- | --- |
 | Domain unit + property (Vitest) | – | – |
 | Storage (Vitest + fake-indexeddb) | – | – |
-| Components (RTL + axe) | – | – |
-| End-to-end (Playwright) | – | – |
+| Components (RTL + axe) | 2026-11-12 (CI, PR #1) | Pass: 5/5 (scaffold smoke, harness, cn) |
+| End-to-end (Playwright) | 2026-11-12 (CI, PR #1) | Pass: 4/4 (smoke + axe, desktop and Pixel 7) |
 | Backend (Pytest, from Phase 3) | – | – |
 
 ## Session log (newest first)
@@ -129,7 +129,6 @@ Last updated: 2026-11-12 · Updated by: Claude (slice 0.2 session)
 ## Open issues
 
 - 06-ai-purchase-advisor.md is missing from project knowledge (listed in 00, referenced by instructions and `AdvisorVerdict` in 03). Needed before Phase 5.
-- Claude GitHub App not installed on vinay2venkat/Lekka, so pushes are refused.
 - `index.html` uses an empty `data:` favicon until the logo lands in 0.3; replace it there (and keep CSP `img-src` in mind in 0.6).
 - Initial JS is 68.7 KB gzipped with React alone; budget is 200 KB for shell + Quick Add (05).
 
